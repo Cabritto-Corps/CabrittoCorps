@@ -1,0 +1,34 @@
+<section id="faq" class="py-24 border-t border-surface/100">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-6">FAQ</h2>
+    <div class="max-w-3xl mx-auto">
+      <div class="divide-y divide-surface/60 border border-surface/60 rounded-xl overflow-hidden">
+        <button (click)="toggle(0)" class="w-full p-5 hover:bg-surface/50 flex justify-center items-center gap-4">
+          <span class="font-semibold">Quais tecnologias vocês usam?</span>
+          <span class="text-foreground-muted">{{ openIndex() === 0 ? '-' : '+' }}</span>
+        </button>
+        <div class="p-5 text-foreground-muted text-center" [class.hidden]="openIndex() !== 0">
+          Trabalhamos com Angular, Tailwind v4, Node, Nest, Next, entre outras.
+        </div>
+
+        <button (click)="toggle(1)" class="w-full p-5 hover:bg-surface/50 flex justify-center items-center gap-4">
+          <span class="font-semibold">Qual é o prazo médio de um projeto?</span>
+          <span class="text-foreground-muted">{{ openIndex() === 1 ? '-' : '+' }}</span>
+        </button>
+        <div class="p-5 text-foreground-muted text-center" [class.hidden]="openIndex() !== 1">
+          Varia conforme o escopo. Projetos típicos levam de 4 a 12 semanas.
+        </div>
+
+        <button (click)="toggle(2)" class="w-full p-5 hover:bg-surface/50 flex justify-center items-center gap-4">
+          <span class="font-semibold">Como iniciamos uma parceria?</span>
+          <span class="text-foreground-muted">{{ openIndex() === 2 ? '-' : '+' }}</span>
+        </button>
+        <div class="p-5 text-foreground-muted text-center" [class.hidden]="openIndex() !== 2">
+          Entre em contato pelo formulário. Agendamos um discovery sem custo.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

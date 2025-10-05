@@ -1,1 +1,104 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+  --color-background: oklch(10% 0.02 260);
+  --color-surface: oklch(18% 0.03 260);
+  --color-foreground: oklch(96% 0.02 260);
+  --color-foreground-muted: oklch(80% 0.03 260);
+  --color-primary: oklch(70% 0.25 260);
+  --color-accent: oklch(72% 0.24 180);
+}
+
+/* Utilitário de fundo aurora sutil para o herói e page backdrop */
+.bg-aurora {
+  background: radial-gradient(1200px 600px at 10% 10%, color(var(--color-accent) / 0.12), transparent 60%),
+              radial-gradient(1000px 500px at 90% 20%, color(var(--color-primary) / 0.10), transparent 60%),
+              radial-gradient(800px 400px at 30% 90%, color(var(--color-accent) / 0.08), transparent 60%);
+  filter: blur(30px);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Cabeçalho com textura sutil (grain) */
+.header-grainy {
+  position: relative;
+}
+
+.header-grainy::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/textures/noise.svg');
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+body {
+  @apply text-white antialiased;
+
+  /* 1. O GRADIENTE DE FUNDO */
+  /* Um gradiente bem sutil, quase imperceptível, com um ângulo leve */
+  /* Cores: de cinza escuro (neutral-800) para preto profundo (neutral-950) */
+  background-color: #050509; /* Cor de base para navegadores que não suportam gradientes */
+  background-image: linear-gradient(175deg, #1f1f29, #050509);
+
+  /* Garante que a rolagem seja suave e o conteúdo não tenha problemas de renderização */
+  background-attachment: fixed;
+}
+
+/* 2. A CAMADA DE RUÍDO "FOSCO" */
+body::before {
+  content: '';
+  position: fixed; /* Fixo, para cobrir toda a tela e não rolar com a página */
+  top: 0;
+  left: 0;
+  width: 100vw; /* 100% da largura da tela */
+  height: 100vh; /* 100% da altura da tela */
+
+  /* Nosso arquivo de ruído */
+  background-image: url('assets/textures/noise.svg');
+
+  /* Ajuste a intensidade do efeito aqui. Valores entre 0.05 e 0.15 são bons */
+  opacity: 0.2;
+
+  /* Coloca a camada de ruído atrás de TODO o conteúdo */
+  z-index: -1;
+
+  /* Garante que essa camada não possa ser clicada ou selecionada */
+  pointer-events: none;
+}
+
+/* 3. EFEITO DE LETRAS ESPELHADAS PARA A MARCA */
+.brand-mirror {
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease, text-shadow 0.35s ease, letter-spacing 0.35s ease, filter 0.35s ease;
+}
+
+.brand-mirror::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  transform: scaleY(-1);
+  color: currentColor; /* mantém a cor de texto do elemento */
+  opacity: 0.35;
+  filter: blur(1px);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+
+.brand-mirror:hover {
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 18px currentColor;
+  transform: translateY(-2px);
+}
+
+.brand-mirror:hover::after {
+  opacity: 0.5;
+  transform: scaleY(-1) translateY(6px);
+  filter: blur(2px);
+}
