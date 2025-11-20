@@ -39,7 +39,7 @@ export class App implements OnInit, OnDestroy {
   public isMuted = signal(true);
   // --- FIM DA LÓGICA DO ÁUDIO ---
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {

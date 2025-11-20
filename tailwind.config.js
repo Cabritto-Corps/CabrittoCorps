@@ -9,24 +9,31 @@ export default defineConfig({
     extend: {
       // 1. PALETA DE CORES OTIMIZADA
       colors: {
-        background: '#0D0D1A',      // O fundo mais profundo
-        surface: '#1A1A2E',         // Cor para 'cards' e superfícies elevadas
+        background: '#000000',      // Absolute Black
+        surface: '#0A0A0A',         // Deep Gray
+        'surface-highlight': '#1A1A1A', // Lighter Gray for hover
 
-        // Tons neutros para os gradientes "foscos"
+        // Neutral tones
         neutral: {
-          950: '#050509',
-          900: '#111118',
-          800: '#1f1f29',
-          700: '#30303d',
+          950: '#050505',
+          900: '#0A0A0A',
+          800: '#1A1A1A',
+          700: '#2A2A2A',
+          600: '#404040',
+          500: '#525252',
+          400: '#737373',
+          300: '#A3A3A3',
+          200: '#E5E5E5',
+          100: '#F5F5F5',
         },
 
-        // Cores de destaque
-        primary: '#E0218A',
-        accent: '#0EF5D4',
+        // Accent Colors (Subtle Metallic/Glass)
+        primary: '#FFFFFF',         // High contrast white
+        accent: '#333333',          // Metallic Gray
 
-        // Cores para texto e conteúdo (nova nomenclatura)
-        foreground: '#F0F0F0',      // Cor principal para textos
-        'foreground-muted': '#A0A0B0', // Cor para textos secundários
+        // Text Colors
+        foreground: '#FFFFFF',      // Primary text
+        'foreground-muted': '#888888', // Secondary text
       },
 
       // 2. FUNDO GRANULADO REUTILIZÁVEL

@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-faq',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './faq.html',
   styleUrl: './faq.css'
 })

@@ -1,22 +1,40 @@
-<header class="header-grainy sticky top-0 z-50 py-4 border-b border-surface/50">
-  <nav class="container mx-auto px-6 flex justify-between items-center">
-  <a href="#" class="text-2xl">
-    <span class="sr-only">Cabritto Corps</span>
-    <img class="h-12 w-auto brightness-0 invert" src="assets/CabrittoLogoSvg.svg" alt="Logo da Cabritto Corps">
-  </a>
-    <ul class="hidden md:flex space-x-8 text-white text-foreground-muted font-semibold">
-      <li><a href="#about" class="hover:text-accent transition-colors duration-300">Sobre Nós</a></li>
-      <li><a href="#services" class="hover:text-accent transition-colors duration-300">Serviços</a></li>
-      <li><a href="#projects" class="hover:text-accent transition-colors duration-300">Projetos</a></li>
-      <li><a href="#team" class="hover:text-accent transition-colors duration-300">Integrantes</a></li>
-      <li><a href="#faq" class="hover:text-accent transition-colors duration-300">FAQ</a></li>
-    </ul>
-    <a href="#contact" class="bg-surface text-foreground font-bold py-2 px-8 rounded-lg text-lg hover:bg-surface/80 border border-accent/50 transition-all duration-300 hover:scale-105">
-      Contato
+<header
+  class="fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-xl bg-black/50 border-b border-white/5">
+  <nav class="container mx-auto px-6 h-20 flex justify-between items-center">
+    <!-- Logo -->
+    <a href="#" class="group flex items-center gap-3">
+      <img class="h-10 w-auto brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
+        src="assets/CabrittoLogoSvg.svg" alt="Cabritto Corps">
     </a>
-    <button class="md:hidden text-foreground">
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex items-center gap-12">
+      <li><a href="#about"
+          class="text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-white transition-colors duration-300">Sobre</a>
+      </li>
+      <li><a href="#services"
+          class="text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-white transition-colors duration-300">Serviços</a>
+      </li>
+      <li><a href="#projects"
+          class="text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-white transition-colors duration-300">Projetos</a>
+      </li>
+      <li><a href="#team"
+          class="text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-white transition-colors duration-300">Team</a>
+      </li>
+    </ul>
+
+    <!-- CTA / Contact -->
+    <div class="hidden md:flex items-center">
+      <a href="#contact"
+        class="text-xs uppercase tracking-[0.2em] text-white border border-white/20 px-6 py-2 hover:bg-white hover:text-black transition-all duration-300">
+        Contato
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden text-white p-2">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-7 6h7" />
       </svg>
     </button>
   </nav>

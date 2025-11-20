@@ -1,15 +1,13 @@
-<div class="relative min-h-screen overflow-x-hidden">
-  <div class="absolute top-0 left-0 w-full h-full bg-aurora z-0"></div>
-
+<div class="relative min-h-screen overflow-x-hidden bg-black">
   <div class="relative z-10">
 
     <div class="fixed bottom-4 right-4 z-50">
       <button (click)="toggleSom()"
-        class="bg-surface/50 text-white p-3 rounded-full shadow-lg hover:bg-surface transition-colors focus:outline-none">
+        class="bg-white/10 backdrop-blur-md text-white p-3 rounded-full shadow-lg hover:bg-white/20 transition-colors focus:outline-none border border-white/10">
         @if (isMuted()) {
-          <span>🔇</span>
+        <span>🔇</span>
         } @else {
-          <span>🔊</span>
+        <span>🔊</span>
         }
       </button>
     </div>
