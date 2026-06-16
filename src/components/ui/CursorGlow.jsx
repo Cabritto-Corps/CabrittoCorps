@@ -11,9 +11,9 @@ export default function CursorGlow() {
     function onMove(e) { tx = e.clientX; ty = e.clientY }
 
     function loop() {
-      x += (tx - x) * 0.12
-      y += (ty - y) * 0.12
-      glow.style.transform = `translate(${x}px,${y}px)`
+      x += (tx - x) * 0.10
+      y += (ty - y) * 0.10
+      glow.style.transform = `translate(${x}px, ${y}px)`
       animId = requestAnimationFrame(loop)
     }
 

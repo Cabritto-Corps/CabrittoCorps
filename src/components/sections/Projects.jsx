@@ -1,93 +1,68 @@
 import { useRef } from 'react'
-import Reveal          from '../ui/Reveal'
-import useGitHubRepos  from '../../hooks/useGitHubRepos'
+import Reveal         from '../ui/Reveal'
+import useGitHubRepos from '../../hooks/useGitHubRepos'
 
-/* ── helpers ── */
-function StatDot() {
-  return (
-    <span
-      className="w-[6px] h-[6px] rounded-full inline-block"
-      style={{ background: 'var(--cyan)', boxShadow: 'var(--glow)' }}
-    />
-  )
-}
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII']
 
-function SkeletonCard() {
+function SkeletonFolio() {
   return (
-    <div className="proj-card animate-pulse">
-      <div className="flex justify-between mb-5">
-        <div className="h-3 w-16 rounded" style={{ background: 'var(--border)' }} />
-        <div className="h-3 w-20 rounded" style={{ background: 'var(--border)' }} />
+    <div className="folio animate-pulse">
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '18px' }}>
+        <div style={{ height: '16px', width: '60px', background: 'var(--line)', borderRadius: '2px' }} />
+        <div style={{ height: '16px', width: '80px', background: 'var(--line)', borderRadius: '2px' }} />
       </div>
-      <div className="h-6 w-2/3 rounded mb-3" style={{ background: 'var(--border)' }} />
-      <div className="space-y-2">
-        <div className="h-3 w-full rounded" style={{ background: 'var(--border)' }} />
-        <div className="h-3 w-4/5 rounded" style={{ background: 'var(--border)' }} />
+      <div style={{ height: '32px', width: '55%', background: 'var(--line)', borderRadius: '2px', marginBottom: '12px' }} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ height: '14px', width: '100%', background: 'var(--line)', borderRadius: '2px' }} />
+        <div style={{ height: '14px', width: '80%', background: 'var(--line)', borderRadius: '2px' }} />
       </div>
-      <div className="flex gap-2 mt-5">
-        <div className="h-5 w-14 rounded" style={{ background: 'var(--border)' }} />
-        <div className="h-5 w-16 rounded" style={{ background: 'var(--border)' }} />
+      <div style={{ display: 'flex', gap: '9px', marginTop: '22px' }}>
+        <div style={{ height: '26px', width: '60px', background: 'var(--line)', borderRadius: '2px' }} />
+        <div style={{ height: '26px', width: '70px', background: 'var(--line)', borderRadius: '2px' }} />
       </div>
     </div>
   )
 }
 
-/* ── project card ── */
-function ProjectCard({ repo, index, delay }) {
+function FolioCard({ repo, index, delay }) {
   const cardRef = useRef(null)
 
   function handlePointerMove(e) {
     const r = cardRef.current.getBoundingClientRect()
-    cardRef.current.style.setProperty('--mx', e.clientX - r.left + 'px')
-    cardRef.current.style.setProperty('--my', e.clientY - r.top  + 'px')
+    cardRef.current.style.setProperty('--mx', (e.clientX - r.left) + 'px')
+    cardRef.current.style.setProperty('--my', (e.clientY - r.top)  + 'px')
   }
 
   return (
     <Reveal as="article" delay={delay}>
-      <div ref={cardRef} className="proj-card h-full" onPointerMove={handlePointerMove}>
-        {/* Card header */}
-        <div className="flex items-center justify-between mb-5">
-          <span className="text-[12px] tracking-[0.1em]" style={{ color: 'var(--muted-2)' }}>
-            PRJ_{String(index + 1).padStart(2, '0')}
+      <div ref={cardRef} className="folio" onPointerMove={handlePointerMove}>
+        {/* Header */}
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '18px' }}>
+          <span style={{ fontFamily: 'var(--serif-d)', fontStyle: 'italic', fontSize: '19px', color: 'var(--gold)', letterSpacing: '0.08em' }}>
+            Folio {ROMAN[index] ?? index + 1}
           </span>
-          <span
-            className="flex items-center gap-[7px] text-[10.5px] tracking-[0.14em] uppercase"
-            style={{ color: 'var(--cyan)' }}
-          >
-            <StatDot /> {repo.stat}
+          <span style={{ fontFamily: 'var(--serif-b)', fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--bronze)' }}>
+            {repo.stat}
           </span>
         </div>
 
-        {/* Repo name */}
-        <div
-          className="text-[22px] font-extrabold tracking-[0.02em] mb-3 break-all"
-          style={{ color: '#eef4f6' }}
-        >
-          <span style={{ color: 'var(--cyan)' }}>[</span>
+        {/* Name */}
+        <div style={{ fontFamily: 'var(--serif-d)', fontWeight: 600, fontSize: '32px', letterSpacing: '0.01em', color: 'var(--ink)', lineHeight: 1.05 }}>
           {repo.name}
-          <span style={{ color: 'var(--cyan)' }}>]</span>
         </div>
 
         {/* Description */}
-        <p
-          className="text-[13.5px] leading-[1.7] min-h-[3.4em]"
-          style={{ color: 'var(--muted)' }}
-        >
+        <p style={{ marginTop: '12px', fontSize: '17px', color: 'var(--ink-soft)', minHeight: '3.2em' }}>
           {repo.desc}
         </p>
 
         {/* Tags */}
         {repo.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-5">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '9px', marginTop: '22px' }}>
             {repo.tags.map(tag => (
               <span
                 key={tag}
-                className="text-[11px] tracking-[0.04em] px-[11px] py-[5px] rounded-[3px]"
-                style={{
-                  color:      'var(--cyan)',
-                  border:     '1px solid var(--cyan-soft)',
-                  background: 'rgba(0,229,255,0.05)',
-                }}
+                style={{ fontFamily: 'var(--serif-b)', fontSize: '13px', letterSpacing: '0.08em', color: 'var(--umber)', padding: '4px 13px', border: '1px solid var(--line)', borderRadius: '2px', background: 'rgba(140,121,97,0.07)' }}
               >
                 {tag}
               </span>
@@ -96,21 +71,18 @@ function ProjectCard({ repo, index, delay }) {
         )}
 
         {/* Footer */}
-        <div
-          className="mt-5 pt-[18px] flex items-center justify-between"
-          style={{ borderTop: '1px solid var(--border)' }}
-        >
-          <span className="text-[11px] tracking-[0.06em]" style={{ color: 'var(--muted-2)' }}>
+        <div style={{ marginTop: '24px', paddingTop: '18px', borderTop: '1px solid var(--line-soft)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ fontFamily: 'var(--serif-d)', fontStyle: 'italic', fontSize: '15px', color: 'var(--ink-faint)' }}>
             {repo.meta}
           </span>
           <a
             href={repo.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="proj-go flex items-center gap-2 text-[12px] no-underline transition-all duration-200"
-            style={{ color: 'var(--muted)' }}
+            className="folio-go"
+            style={{ fontFamily: 'var(--serif-b)', fontSize: '14px', letterSpacing: '0.06em', color: 'var(--bronze)', display: 'inline-flex', gap: '8px', alignItems: 'center', transition: 'color .25s ease, gap .25s ease', textDecoration: 'none' }}
           >
-            ver no GitHub →
+            examinar →
           </a>
         </div>
       </div>
@@ -118,68 +90,46 @@ function ProjectCard({ repo, index, delay }) {
   )
 }
 
-/* ── section ── */
 export default function Projects() {
   const { repos, loading, error } = useGitHubRepos()
 
   return (
-    <section id="projetos" className="py-[110px] relative">
-      <div className="mx-auto px-6" style={{ maxWidth: '1180px' }}>
+    <section id="obras" style={{ padding: '120px 0', position: 'relative' }}>
+      <div style={{ width: 'min(1200px, 90vw)', margin: '0 auto' }} className="px-6 md:px-0">
         {/* Section header */}
-        <Reveal className="mb-14">
-          <div className="sec-tag"><span className="sec-tag-n">01 //</span> PORTFÓLIO</div>
-          <h2 className="sec-title">Projetos da manada</h2>
+        <Reveal style={{ marginBottom: '60px' }}>
+          <span className="sec-num">— Caput I —</span>
+          <h2 className="sec-title">As <em>Obras</em> da manada</h2>
           <p className="sec-sub">
-            Repositórios públicos da{' '}
-            <a
-              href="https://github.com/Cabritto-Corps"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'var(--cyan)', textDecoration: 'none' }}
-            >
+            Sistemas concebidos como afrescos: proporção, equilíbrio e a teimosia de um cabrito que nunca recua.{' '}
+            Repositórios da{' '}
+            <a href="https://github.com/Cabritto-Corps" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--gold)', textDecoration: 'none' }}>
               @Cabritto-Corps
-            </a>
-            {' '}ordenados por popularidade, carregados em tempo real.
+            </a>.
           </p>
         </Reveal>
 
-        {/* Error state */}
+        {/* Error */}
         {error && (
-          <div
-            className="text-center py-10 text-[13px] tracking-[0.05em]"
-            style={{ color: 'var(--muted)' }}
-          >
-            // erro ao buscar repositórios: {error}
-          </div>
+          <p style={{ textAlign: 'center', padding: '40px 0', fontFamily: 'var(--serif-d)', fontStyle: 'italic', color: 'var(--ink-faint)' }}>
+            Erro ao consultar os arquivos: {error}
+          </p>
         )}
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[22px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[26px]">
           {loading
-            ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+            ? Array.from({ length: 4 }).map((_, i) => <SkeletonFolio key={i} />)
             : repos.map((repo, i) => (
-                <ProjectCard
-                  key={repo.name}
-                  repo={repo}
-                  index={i}
-                  delay={`d${i % 3}`}
-                />
+                <FolioCard key={repo.name} repo={repo} index={i} delay={`d${i % 3}`} />
               ))
           }
         </div>
 
         {!loading && !error && (
-          <Reveal className="mt-[26px]">
-            <p className="text-[11px] tracking-[0.05em]" style={{ color: 'var(--muted-2)' }}>
-              // {repos.length} repositório{repos.length !== 1 ? 's' : ''} encontrado{repos.length !== 1 ? 's' : ''} em{' '}
-              <a
-                href="https://github.com/Cabritto-Corps"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: 'var(--muted)', textDecoration: 'none' }}
-              >
-                github.com/Cabritto-Corps
-              </a>
+          <Reveal>
+            <p style={{ marginTop: '28px', fontFamily: 'var(--serif-d)', fontStyle: 'italic', fontSize: '15px', color: 'var(--ink-faint)', textAlign: 'center' }}>
+              ❧ {repos.length} {repos.length === 1 ? 'repositório encontrado' : 'repositórios encontrados'} em github.com/Cabritto-Corps
             </p>
           </Reveal>
         )}

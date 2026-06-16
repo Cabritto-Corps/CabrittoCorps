@@ -1,50 +1,44 @@
 const NAV_LINKS = [
-  { href: '#inicio',   label: 'início'   },
-  { href: '#projetos', label: 'projetos' },
-  { href: '#equipe',   label: 'equipe'   },
+  { href: '#proemio',   label: 'Proêmio'    },
+  { href: '#obras',     label: 'Obras'       },
+  { href: '#confraria', label: 'A Confraria' },
 ]
 
 export default function Navbar() {
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-[10px]"
       style={{
-        background: 'linear-gradient(to bottom, rgba(6,7,9,0.85), rgba(6,7,9,0.35))',
-        borderColor: 'rgba(255,255,255,0.08)',
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+        background: 'linear-gradient(to bottom, rgba(231,218,198,0.92), rgba(231,218,198,0.55))',
+        backdropFilter: 'blur(6px)',
+        borderBottom: '1px solid var(--line)',
       }}
     >
       <div
-        className="flex items-center justify-between py-4 px-6 mx-auto"
-        style={{ maxWidth: '1180px' }}
+        style={{ width: 'min(1200px, 90vw)', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 0' }}
       >
         {/* Brand */}
         <button
-          className="flex items-center gap-3 bg-transparent border-none cursor-pointer"
+          style={{ display: 'flex', alignItems: 'center', gap: '13px', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          <img
-            src="/assets/goat.svg"
-            alt="Cabritto Corps"
-            className="w-[30px] h-[30px]"
-            style={{ filter: 'drop-shadow(0 0 8px rgba(0,229,255,0.45))' }}
-          />
-          <span className="font-extrabold tracking-[0.18em] text-[14px] text-[#d7dee3]">
-            CABRITTO<span style={{ color: 'var(--cyan)' }}>_</span>CORPS
+          <img src="/assets/goat-dark.svg" alt="Cabritto Corps" style={{ width: '34px', height: '34px' }} />
+          <span style={{ fontFamily: 'var(--serif-d)', fontWeight: 600, fontSize: '21px', letterSpacing: '0.14em', color: 'var(--ink)' }}>
+            Cabritto<span style={{ color: 'var(--gold)', fontStyle: 'normal' }}>·</span>Corps
           </span>
         </button>
 
         {/* Links */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(({ href, label }) => (
             <a key={href} href={href} className="nav-link">{label}</a>
           ))}
         </div>
 
-        {/* Status */}
-        <div className="flex items-center gap-2 text-[11px] text-[#707c85] tracking-[0.08em]">
-          <span className="status-dot" />
-          SISTEMAS ONLINE
-        </div>
+        {/* Anno */}
+        <span style={{ fontFamily: 'var(--serif-d)', fontStyle: 'italic', fontSize: '15px', color: 'var(--bronze)', letterSpacing: '0.05em' }}>
+          Anno MMXXVI
+        </span>
       </div>
     </nav>
   )

@@ -5,23 +5,30 @@ import Footer        from './components/layout/Footer'
 import Hero          from './components/sections/Hero'
 import Projects      from './components/sections/Projects'
 import Team          from './components/sections/Team'
+import Reveal        from './components/ui/Reveal'
+
+const CONTAINER = { width: 'min(1200px, 90vw)', margin: '0 auto' }
 
 export default function App() {
   return (
     <>
-      {/* Fixed ambient layers (behind everything) */}
       <div className="atmosphere" />
       <ParticleCanvas />
       <CursorGlow />
-      <div className="vignette" />
-      <div className="scanlines" />
+      <div className="grain" />
+      <div className="edge-burn" />
 
-      {/* Page content */}
-      <div className="relative" style={{ zIndex: 2 }}>
+      <div className="relative" style={{ zIndex: 3 }}>
         <Navbar />
         <main>
           <Hero />
+          <div style={CONTAINER} className="px-6 md:px-0">
+            <Reveal><div className="divider" /></Reveal>
+          </div>
           <Projects />
+          <div style={CONTAINER} className="px-6 md:px-0">
+            <Reveal><div className="divider" /></Reveal>
+          </div>
           <Team />
         </main>
         <Footer />

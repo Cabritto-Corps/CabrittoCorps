@@ -7,8 +7,9 @@ export default function ParticleCanvas() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
-    let W, H, DPR, stars = [], animId
+    let W, H, DPR, motes = [], animId
     const mouse = { x: -9999, y: -9999 }
+    const MR = 150
 
     function resize() {
       DPR = Math.min(devicePixelRatio || 1, 2)
@@ -16,14 +17,15 @@ export default function ParticleCanvas() {
       H = canvas.height = innerHeight * DPR
       canvas.style.width  = innerWidth  + 'px'
       canvas.style.height = innerHeight + 'px'
-      const count = Math.min(150, Math.floor((innerWidth * innerHeight) / 11000))
-      stars = Array.from({ length: count }, () => ({
-        x:  Math.random() * W,
-        y:  Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.16 * DPR,
-        vy: (Math.random() - 0.5) * 0.16 * DPR,
-        r:  (Math.random() * 1.4 + 0.4) * DPR,
-        tw: Math.random() * Math.PI * 2,
+      const count = Math.min(110, Math.floor((innerWidth * innerHeight) / 15000))
+      motes = Array.from({ length: count }, () => ({
+        x:    Math.random() * W,
+        y:    Math.random() * H,
+        vx:   (Math.random() - 0.5) * 0.12 * DPR,
+        vy:   (-Math.random() * 0.18 - 0.03) * DPR,
+        r:    (Math.random() * 1.8 + 0.5) * DPR,
+        tw:   Math.random() * Math.PI * 2,
+        warm: Math.random() > 0.5,
       }))
     }
 
@@ -32,52 +34,22 @@ export default function ParticleCanvas() {
 
     function frame() {
       ctx.clearRect(0, 0, W, H)
-      const linkDist = 128 * DPR
-      const mr       = 170 * DPR
-
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i]
-        s.x += s.vx; s.y += s.vy
-        if (s.x < 0) s.x = W; if (s.x > W) s.x = 0
-        if (s.y < 0) s.y = H; if (s.y > H) s.y = 0
-
-        const dxm = mouse.x - s.x, dym = mouse.y - s.y
-        const dm  = Math.hypot(dxm, dym)
-        if (dm < mr) {
-          const f = (1 - dm / mr) * 0.6
-          s.x += (dxm / (dm || 1)) * f
-          s.y += (dym / (dm || 1)) * f
+      const mr = MR * DPR
+      for (const m of motes) {
+        m.x += m.vx; m.y += m.vy; m.tw += 0.025
+        if (m.y < -10) { m.y = H + 10; m.x = Math.random() * W }
+        if (m.x < -10) m.x = W + 10
+        if (m.x > W + 10) m.x = -10
+        const dx = m.x - mouse.x, dy = m.y - mouse.y, d = Math.hypot(dx, dy)
+        if (d < mr) {
+          const f = (1 - d / mr) * 0.5
+          m.x += (-dy / (d || 1)) * f; m.y += (dx / (d || 1)) * f
+          m.x += (dx / (d || 1)) * f * 0.4; m.y += (dy / (d || 1)) * f * 0.4
         }
-
-        s.tw += 0.03
-        const a = 0.45 + Math.sin(s.tw) * 0.3
-        ctx.beginPath()
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(150,210,225,${a})`
+        const a = 0.18 + (Math.sin(m.tw) * 0.5 + 0.5) * 0.32
+        ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2)
+        ctx.fillStyle = m.warm ? `rgba(168,130,60,${a})` : `rgba(89,62,28,${a * 0.7})`
         ctx.fill()
-
-        if (dm < mr) {
-          ctx.beginPath()
-          ctx.moveTo(s.x, s.y)
-          ctx.lineTo(mouse.x, mouse.y)
-          ctx.strokeStyle = `rgba(0,229,255,${(1 - dm / mr) * 0.4})`
-          ctx.lineWidth   = DPR * 0.6
-          ctx.stroke()
-        }
-
-        for (let j = i + 1; j < stars.length; j++) {
-          const o  = stars[j]
-          const dx = s.x - o.x, dy = s.y - o.y
-          const d  = Math.hypot(dx, dy)
-          if (d < linkDist) {
-            ctx.beginPath()
-            ctx.moveTo(s.x, s.y)
-            ctx.lineTo(o.x, o.y)
-            ctx.strokeStyle = `rgba(0,229,255,${(1 - d / linkDist) * 0.12})`
-            ctx.lineWidth   = DPR * 0.5
-            ctx.stroke()
-          }
-        }
       }
       animId = requestAnimationFrame(frame)
     }
@@ -88,9 +60,9 @@ export default function ParticleCanvas() {
     window.addEventListener('pointerleave', onPointerLeave)
 
     if (reduce) {
-      stars.forEach(s => {
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(150,210,225,0.5)'; ctx.fill()
+      motes.forEach(m => {
+        ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(168,130,60,0.25)'; ctx.fill()
       })
     } else {
       frame()
@@ -107,11 +79,7 @@ export default function ParticleCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        position: 'fixed', inset: 0,
-        width: '100%', height: '100%',
-        zIndex: 0, pointerEvents: 'none',
-      }}
+      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 2, pointerEvents: 'none' }}
     />
   )
 }
