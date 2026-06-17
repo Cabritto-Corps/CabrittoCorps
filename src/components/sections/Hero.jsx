@@ -88,9 +88,9 @@ export default function Hero() {
             {/* CTAs */}
             <div style={{ marginTop: '40px', display: 'flex', gap: '18px', flexWrap: 'wrap' }}>
               <a href="#obras" className="btn-primary">
-                Conheça nossas Obras <span className="arrow">→</span>
+                Conheça nossos projetos <span className="arrow">→</span>
               </a>
-              <a href="#confraria" className="btn-ghost">A Confraria</a>
+              <a href="#confraria" className="btn-ghost">Os Goats</a>
             </div>
 
             {/* Motto */}

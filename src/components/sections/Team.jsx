@@ -60,10 +60,7 @@ export default function Team() {
         {/* Section header */}
         <Reveal style={{ marginBottom: '60px', textAlign: 'center' }}>
           <span className="sec-num">— Caput II —</span>
-          <h2 className="sec-title">A <em>Confraria</em></h2>
-          <p className="sec-sub" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-            Quatro artífices, um só rebanho. Os retratos são iluminados em tempo real a partir do GitHub.
-          </p>
+          <h2 className="sec-title">Os <em>Goats</em></h2>
         </Reveal>
 
         {/* Grid */}

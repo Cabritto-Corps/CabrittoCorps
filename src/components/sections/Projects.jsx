@@ -99,9 +99,8 @@ export default function Projects() {
         {/* Section header */}
         <Reveal style={{ marginBottom: '60px' }}>
           <span className="sec-num">— Caput I —</span>
-          <h2 className="sec-title">As <em>Obras</em> da manada</h2>
-          <p className="sec-sub">
-            Sistemas concebidos como afrescos: proporção, equilíbrio e a teimosia de um cabrito que nunca recua.{' '}
+          <h2 className="sec-title"><em>Projetos</em></h2>
+          <p className="sec-sub">{' '}
             Repositórios da{' '}
             <a href="https://github.com/Cabritto-Corps" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--gold)', textDecoration: 'none' }}>
               @Cabritto-Corps

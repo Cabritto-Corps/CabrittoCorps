@@ -1,7 +1,7 @@
 const NAV_LINKS = [
-  { href: '#proemio',   label: 'Proêmio'    },
-  { href: '#obras',     label: 'Obras'       },
-  { href: '#confraria', label: 'A Confraria' },
+  { href: '#Inicio',   label: 'Inicio'    },
+  { href: '#obras',     label: 'Projetos'       },
+  { href: '#confraria', label: 'Goats' },
 ]
 
 export default function Navbar() {
